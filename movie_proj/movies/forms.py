@@ -1,4 +1,4 @@
-from django.forms import forms
+from django import forms
 from .models import Film, Commercial
 from actors.models import Actor
 
@@ -9,19 +9,17 @@ MOVIE_CHOICES=(
 	('COMMERCIAL','Commercial'))
 
 class MovieSelectForm(forms.Form):
-	movie = forms.ChoiceField(choices =MOVIE_CHOICES,
-								label=,
-								widget=forms.RadioSelect(attrs={}))
+	movie = forms.ChoiceField(choices =MOVIE_CHOICES, label="Choose your type", widget=forms.RadioSelect(attrs={}))
 
 
 class FilmModelForm(forms.ModelForm):
-	actors = forms.ModeMultipleChoiceField(label="Select all the actors", widgets = forms.SelectMultiple, queryset=Actor.objects.filter(is_star=True))
+	actors = forms.ModelMultipleChoiceField(label="Select all the actors", widget = forms.SelectMultiple, queryset=Actor.objects.filter(is_star=True))
 	class Meta:
 		model = Film
 		fields = "__all__"
 
 class CommercialModelForm(forms.ModelForm):
-	actors = forms.ModeMultipleChoiceField(label="Select all the actors", widgets = forms.SelectMultiple, queryset=Actor.objects.filter(is_star=False))
+	actors = forms.ModelMultipleChoiceField(label="Select all the actors", widget = forms.SelectMultiple, queryset=Actor.objects.filter(is_star=False))
 	class Meta:
 		model = Commercial
 		fields = "__all__"
